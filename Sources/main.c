@@ -14,7 +14,7 @@ void portInit(void){
   //Direction registers
   DDRH = 0x00;  // Port H is input       
   DDRB = 0x0F; // Port B starts as output
-  PORTB = 0x00; //turn all LED's OFF
+  PORTB = 0x00; // turn all LED's OFF
   DDRT = 0xFF;  // port T7 is input rest is output
 
   //motors
@@ -53,7 +53,6 @@ void setup() {
      PORTB_BIT3 = ~PORTB_BIT3;
      ms_delay(25);
     }  
-    //motor7(0xFF); //Full power to pickup motor
     PORTB_BIT0 = 0; 
     PORTB_BIT1 = 0; 
     PORTB_BIT2 = 0; 
@@ -63,41 +62,6 @@ void setup() {
     PTT_PTT0 = 1; //Motor EN
   } else {
     mid = s4avg-s5avg;
-    /*mid = (s4avg + s5avg)/2;
-    err_right = mid - s5avg;
-    err_left = mid - s4avg;
-    if (err_right < 0) {
-      moveRight = 0;
-      moveLeft = 1;
-    }
-    else if (err_left < 0) {
-      moveRight = 1;
-      moveLeft = 0;
-    }*/
-    
-    //averageSensors();
-    //deltaSpeed = s4avg - lastFront;
-    //lastFront = s4avg;
-    /*if (s4avg > wallTurnCurrent) { 
-      PORTB_BIT0 = 1; //enable 1st LED to show front sensor within outer turn value
-    } else {
-      PORTB_BIT0 = 0; //enable 1st LED to show front sensor outside outer turn value
-    }
-    if (s5avg > gWallCurrent) {
-      PORTB_BIT1 = 1; //disable 1st LED to show front sensor outside outer turn value
-    } else {
-      PORTB_BIT1 = 0; //disable 1st LED to show front sensor outside outer turn value
-    }
-    if (s6avg > lineValueThresh) {
-      PORTB_BIT2 = 1; //enable 3rd LED to show line sensor within outer line value
-    } else {
-      PORTB_BIT2 = 0; //disable 3rd LED to show line sensor outside outer line value
-    }
-    if (s7avg < 100) {
-      PORTB_BIT3 = 1; //enable 3rd LED to show line sensor within outer line value
-    } else {
-      PORTB_BIT3 = 0; //disable 3rd LED to show line sensor outside outer line value
-    }*/
   }
 }
 
@@ -141,48 +105,9 @@ void forwardP() {
 
 }
   
-
-
-//WORKING
-///////////////////////////
-// Average sensor values //
-///////////////////////////
-/*void averageSensors() {
-  int i; //loop variable
-  s4total = s5total = s6total = s7total=0; //reset totals to 0
-  if (sensorAvgIndex > 50) { //limit to last 25 readings (reduce loop time)
-    
-    for (i = sensorAvgIndex-50; i < (sensorAvgIndex); i++) //total 25 of most recent values for each sensor
-    {
-        s4total += s4a[i]; //add front to total
-        s5total += s5a[i]; //add side (long) to total
-        s6total += s6a[i]; //add line to total
-        s7total += s7a[i]; //add side (short) to total
-    }
-    i = 50;
-  } else //we somehow have less than 25 values, total all of them
-  {
-    for (i = 0; i < (sensorAvgIndex); i++)  //total all values 
-    {
-        s4total += s4a[i]; //add front to total
-        s5total += s5a[i]; //add side (long) to total
-        s6total += s6a[i]; //add line to total
-        s7total += s7a[i]; //add side (short) to total
-    }
-  }
-  s4avg = s4total/i; //update average 
-  s5avg = s5total/i; //update average
-  s6avg = s6total/i; //update average
-  s7avg = s7total/i; //update average
-  sensorAvgIndex = 0; //reset sensor storage index to 0
-}*/
-
-
-//NEEDS WORK
 ////////////////////////////////////////
 // Real time interrupt                //
 // Higher priority than ATD interrupt //
-// Modified to 2 ms                   //
 ////////////////////////////////////////
 void interrupt 7 RTIhandler()
 {  
@@ -195,8 +120,6 @@ void interrupt 7 RTIhandler()
   clear_RTI_flag();
 }
 
-
-//WORKING
 ////////////////////////////////////////////////
 // A/D Converter interrupt                    //
 // enabled through custom assembly subroutine //
@@ -218,12 +141,9 @@ void interrupt 22 ANhandler()
     s7avg += s7/sn; // store side IR (SHORT) in sensor array
     sn++;
     if (sn > 255)
-      sn = 1;
+      sn = 10;
 }
 
-
-
-//WORKING
 //////////////
 // Movement //
 //////////////

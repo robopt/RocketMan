@@ -31,7 +31,7 @@ const int sensorCount = 4;
 const int sensorStart = 4;
 int s0,s1,s2,s3,s4,s5,s6,s7;
 int s4avg = 0, s5avg = 0, s6avg = 0, s7avg = 0;
-int sn = 1;
+int sn = 10;
 int mid = 0;
 
 //function defs

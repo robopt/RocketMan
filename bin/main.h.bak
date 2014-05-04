@@ -1,0 +1,54 @@
+//Proportional values
+#define MAX  255
+#define MIN 0
+double Kp = 7.5;
+double Kd = 0;
+int baseSpeed = 200;
+int setpoint = 40;
+//float pre_error = 0;
+float error;
+int moutput,loutput;
+int gWallOuter = 52, gWallInner = 22, gWallCurrent = 52;
+int wallTurnOuter = 67, wallTurnInner = 29, wallTurnCurrent = 67;
+int wallTurnMid = 30;
+int gWallOuterCorner = 67;
+int wallThresh = 100;
+int cornerBool = 0;
+int straightBool = 0;
+int straightTrig = 15;
+int lastCorner = 0;
+int lastThresh = 60;
+char cornerCount = 0x00;
+int lastLineSwap = 0;
+int sensorCount = 4;
+int sensorStart = 4;
+int sensorIndex = 4;
+int sensorAvgIndex = 0;
+int sensorAvgCount = 20;
+char isSetup = 0x00;
+char leftTurn = 0x01;
+
+int s0,s1,s2,s3,s4,s5,s6,s7;
+int s4total,s5total,s6total,s7total;
+int s4avg,s5avg,s6avg,s7avg;
+int lastError = 0;
+
+double angle;
+int s4a[40];
+int s5a[40];
+int s6a[40];
+int s7a[40];
+// asm(nop) = 41.667 ns
+
+//function defs
+void portInit(void);
+void averageSensors();
+void forward(char speed);
+void forwardP();
+void right(char lspeed);
+void left(char rspeed);
+void back(char speed);
+void bleft(char rspeed);
+void bright(char lspeed);
+void setup();
+char rxChar;

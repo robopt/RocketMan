@@ -1,6 +1,9 @@
 // wall PID values
-double Kp = 1;
-int lastError = 0;
+double Kp = 2.5;
+double Kd = 15;
+
+double P,D,output;
+int lasterror = 0;
    
 int sum, senSum;
 int error, deltaError;
@@ -13,12 +16,12 @@ int moveLeft = 0;
 // Motor constraints //
 ///////////////////////
 //base speed
-int BASE = 45;
+int BASE = 75;
 
 
 //limitations
-const int MAX = 60;
-const int MIN = 30; 
+const int MAX = 125;
+const int MIN = 35; 
 
 //motor variables 
 int routput,loutput;

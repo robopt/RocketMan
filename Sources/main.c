@@ -72,8 +72,16 @@ void setup() {
 void forwardP() {
   //error = gWallCurrent - s5avg; //instant error e
   error = s4avg-s5avg;
-  routput = (int)((BASE)-(Kp*error));
-  loutput = (int)((BASE)+(Kp*error));
+  
+  P = Kp*error;
+  D = Kd*(error-lasterror);
+  
+  output=P+D;
+  
+  lasterror=error;
+  
+  routput = (int)((BASE)+(output));
+  loutput = (int)((BASE)-(output));
   
   // saturation logic
 	if(routput > MAX)  // no motor values > 255 or < 0
@@ -85,23 +93,27 @@ void forwardP() {
 	  else if(loutput <= MIN)
 		  loutput = MIN;
 
-  PTT_PTT3 = 0; //Motor L1
-  PTT_PTT5 = 1; //Motor L2
-  PTT_PTT4 = 0; //Motor R1
-  PTT_PTT6 = 1; //Motor R2
 	  
-	if (loutput == MIN) { 
+	if (routput == MIN) {
+    motor1(BASE); //Left motor 
     PTT_PTT3 = 1; //Motor L1
     PTT_PTT5 = 1; //Motor L2
-	}  
-	if (routput == MIN) { 
-    PTT_PTT6 = 1; //Motor R1
-    PTT_PTT7 = 1; //Motor R2
-	} 
+	} else {
+    motor1(routput); //Left motor 
+    PTT_PTT3 = 0; //Motor L1
+    PTT_PTT5 = 1; //Motor L2
+	}
+	if (loutput == MIN) {
+    motor0(BASE); //Right motor 
+    PTT_PTT4 = 1; //Motor R1
+    PTT_PTT6 = 1; //Motor R2
+	} else {
+    motor0(loutput); //Right motor
+    PTT_PTT4 = 0; //Motor R1
+    PTT_PTT6 = 1; //Motor R2
+	}
   
   //pwm
-  motor0(routput); //Right motor
-  motor1(loutput); //Left motor
 
 }
   
@@ -127,7 +139,7 @@ void interrupt 7 RTIhandler()
 void interrupt 22 ANhandler()
 {
     s4 = ATD0DR0L; // ATD converter 0 data register 0 lower 8 bytes
-    s5 = ATD0DR1L; // ATD converter 0 data register 1 lower 8 bytes
+    s5 = ATD0DR1L+20; // ATD converter 0 data register 1 lower 8 bytes
     s6 = ATD0DR2L; // ATD converter 0 data register 2 lower 8 bytes
     s7 = ATD0DR3L; // ATD converter 0 data register 3 lower 8 bytes
     

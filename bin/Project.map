@@ -30,8 +30,8 @@ Entry point: 0xC029 (_Startup)
 _startupData is allocated at 0xC031 and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
-  _Range   pZeroOut       0x1100     62
-  _Copy    *toCopyDownBeg 0xCBD3
+  _Range   pZeroOut       0x1100     80
+  _Copy    *toCopyDownBeg 0xCC16
 } _startupData;
 
 *********************************************************************************************
@@ -40,10 +40,10 @@ Section Name                    Size  Type     From       To       Segment
 ---------------------------------------------------------------------------------------------
 .init                             49     R     0xC000     0xC030   ROM_C000
 .startData                        10     R     0xC031     0xC03A   ROM_C000
-.text                            494     R     0xC03B     0xC228   ROM_C000
-.copy                             14     R     0xCBD3     0xCBE0   ROM_C000
+.text                            561     R     0xC03B     0xC26B   ROM_C000
+.copy                             18     R     0xCC16     0xCC27   ROM_C000
 .stack                           256   R/W     0x1000     0x10FF   RAM
-.data                              8   R/W     0x1100     0x1107   RAM
+.data                             12   R/W     0x1100     0x110B   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
 .abs_section_a                     1   N/I        0xA        0xA   .absSeg2
@@ -387,16 +387,16 @@ Section Name                    Size  Type     From       To       Segment
 .abs_section_2be                   2   N/I      0x2BE      0x2BF   .absSeg340
 .abs_section_fff0                  2     R     0xFFF0     0xFFF1   .absSeg341
 .abs_section_ffd2                  2     R     0xFFD2     0xFFD3   .absSeg342
-.bss                              12   R/W     0x1108     0x1113   RAM
-MyCode                          1883     R     0xC229     0xC983   ROM_C000
-MY_EXTENDED_RAM                   28   R/W     0x1114     0x112F   RAM
-.common                           14   R/W     0x1130     0x113D   RAM
-RUNTIME                          591     R     0xC984     0xCBD2   ROM_C000
+.bss                              14   R/W     0x110C     0x1119   RAM
+MyCode                          1883     R     0xC26C     0xC9C6   ROM_C000
+MY_EXTENDED_RAM                   28   R/W     0x111A     0x1135   RAM
+.common                           26   R/W     0x1136     0x114F   RAM
+RUNTIME                          591     R     0xC9C7     0xCC15   ROM_C000
 .vectSeg343_vect                   2     R     0xFFFE     0xFFFF   .vectSeg343
 
 Summary of section sizes per section type:
-READ_ONLY (R):         BE7 (dec:     3047)
-READ_WRITE (R/W):      13E (dec:      318)
+READ_ONLY (R):         C2E (dec:     3118)
+READ_WRITE (R/W):      150 (dec:      336)
 NO_INIT (N/I):         190 (dec:      400)
 
 *********************************************************************************************
@@ -592,7 +592,7 @@ MODULE:                 -- mc9s12dg256.c.o --
      _CAN0TXDSR7                                17B       1       1       0   .abs_section_17b
      _CAN0TXDLR                                 17C       1       1       0   .abs_section_17c
      _CAN0TXTBPR                                17D       1       1       0   .abs_section_17d
-     _PTT                                       240       1       1      13   .abs_section_240
+     _PTT                                       240       1       1      11   .abs_section_240
      _PTIT                                      241       1       1       0   .abs_section_241
      _DDRT                                      242       1       1       1   .abs_section_242
      _RDRT                                      243       1       1       0   .abs_section_243
@@ -755,231 +755,236 @@ MODULE:                 -- mc9s12dg256.c.o --
      _CAN4TXTSR                                 2BE       2       2       0   .abs_section_2be
 MODULE:                 -- main.asm.o --
 - PROCEDURES:
-     MASK                                      C229       8       8       4   MyCode      
-     SEG7TBL                                   C231       4       4       1   MyCode      
-     VAR00001                                  C235       4       4       0   MyCode      
-     VAR00002                                  C239       4       4       0   MyCode      
-     VAR00003                                  C23D       4       4       0   MyCode      
-     VAR00004                                  C241       1       1       1   MyCode      
-     VAR00005                                  C242       1       1       0   MyCode      
-     VAR00006                                  C243       1       1       0   MyCode      
-     VAR00007                                  C244       1       1       0   MyCode      
-     VAR00008                                  C245       1       1       0   MyCode      
-     VAR00009                                  C246       1       1       0   MyCode      
-     VAR00010                                  C247       1       1       0   MyCode      
-     VAR00011                                  C248       1       1       0   MyCode      
-     VAR00012                                  C249       1       1       0   MyCode      
-     VAR00013                                  C24A       1       1       0   MyCode      
-     VAR00014                                  C24B       1       1       0   MyCode      
-     VAR00015                                  C24C       1       1       0   MyCode      
-     VAR00016                                  C24D       1       1       0   MyCode      
-     VAR00017                                  C24E       1       1       0   MyCode      
-     VAR00018                                  C24F       1       1       0   MyCode      
-     VAR00019                                  C250       1       1       0   MyCode      
-     asm_main                                  C251      12      18       0   MyCode      
-     PLL_init                                  C251       0       0       1   MyCode      
-     pll1                                      C263       A      10       0   MyCode      
-     led_enable                                C26D      12      18       0   MyCode      
-     leds_on                                   C27F       3       3       0   MyCode      
-     leds_off                                  C282       4       4       0   MyCode      
-     led_disable                               C286       A      10       0   MyCode      
-     seg7_enable                               C290      12      18       0   MyCode      
-     seg7_disable                              C2A2       A      10       0   MyCode      
-     seg7_on                                   C2AC      10      16       0   MyCode      
-     seg7s_off                                 C2BC       4       4       0   MyCode      
-     ms_delay                                  C2C0       4       4       9   MyCode      
-     md1                                       C2C4       3       3       0   MyCode      
-     md2                                       C2C7       9       9       0   MyCode      
-     led_on                                    C2D0       C      12       0   MyCode      
-     led_off                                   C2DC       D      13       0   MyCode      
-     seg7dec                                   C2E9      17      23       0   MyCode      
-     SW_enable                                 C300       4       4       0   MyCode      
-     SW1_dip                                   C304       4       4       0   MyCode      
-     SW2_down                                  C308       A      10       0   MyCode      
-     SW2end1                                   C312       1       1       0   MyCode      
-     SW2_up                                    C313       A      10       0   MyCode      
-     SW2end2                                   C31D       1       1       0   MyCode      
-     SW3_down                                  C31E       B      11       0   MyCode      
-     SW3_up                                    C329       B      11       0   MyCode      
-     SW4_down                                  C334       A      10       0   MyCode      
-     SW4end1                                   C33E       1       1       0   MyCode      
-     SW4_up                                    C33F       A      10       0   MyCode      
-     SW4end2                                   C349       1       1       0   MyCode      
-     SW5_down                                  C34A       A      10       0   MyCode      
-     SW5end1                                   C354       1       1       0   MyCode      
-     SW5_up                                    C355       A      10       0   MyCode      
-     SW5end2                                   C35F       1       1       0   MyCode      
-     keypad_enable                             C360       9       9       0   MyCode      
-     keyscan                                   C369       4       4       0   MyCode      
-     ks1                                       C36D       B      11       0   MyCode      
-     ks2                                       C378      11      17       0   MyCode      
-     ks3                                       C389       2       2       0   MyCode      
-     keypad                                    C38B       7       7       0   MyCode      
-     gk1                                       C392       0       0       0   MyCode      
-     getkey                                    C392      11      17       0   MyCode      
-     wait_keyup                                C3A3      13      19       0   MyCode      
-     lcd_init                                  C3B6       A      10       0   MyCode      
-     lcdi1                                     C3C0      12      18       0   MyCode      
-     VAR00020                                  C3D2       1       1       1   MyCode      
-     VAR00021                                  C3D3       1       1       0   MyCode      
-     VAR00022                                  C3D4       1       1       0   MyCode      
-     VAR00023                                  C3D5       1       1       0   MyCode      
-     VAR00024                                  C3D6       1       1       0   MyCode      
-     VAR00025                                  C3D7       1       1       0   MyCode      
-     VAR00026                                  C3D8       1       1       0   MyCode      
-     VAR00027                                  C3D9       1       1       0   MyCode      
-     VAR00028                                  C3DA       1       1       0   MyCode      
-     VAR00029                                  C3DB       1       1       0   MyCode      
-     VAR00030                                  C3DC       1       1       0   MyCode      
-     VAR00031                                  C3DD       1       1       0   MyCode      
-     VAR00032                                  C3DE       1       1       0   MyCode      
-     write_instr_nibble                        C3DF       B      11       3   MyCode      
-     win                                       C3EA       8       8       0   MyCode      
-     write_data_nibble                         C3F2       B      11       2   MyCode      
-     wdn                                       C3FD       8       8       0   MyCode      
-     write_instr_byte                          C405       D      13       3   MyCode      
-     write_data_byte                           C412      19      25       2   MyCode      
-     data8                                     C42B       C      12       3   MyCode      
-     set_lcd_addr                              C437       E      14       0   MyCode      
-     clear_lcd                                 C445       C      12       0   MyCode      
-     hex2lcd                                   C451       6       6       0   MyCode      
-     hex2asc                                   C457       9       9       0   MyCode      
-     ha1                                       C460       3       3       0   MyCode      
-     type_lcd                                  C463       3       3       0   MyCode      
-     next_char                                 C466       F      15       0   MyCode      
-     done                                      C475       2       2       0   MyCode      
-     write_int_lcd                             C477      16      22       0   MyCode      
-     wl1                                       C48D       B      11       0   MyCode      
-     write_long_lcd                            C498      15      21       0   MyCode      
-     wll1                                      C4AD       B      11       0   MyCode      
-     blank_pad                                 C4B8       7       7       0   MyCode      
-     bp1                                       C4BF       6       6       0   MyCode      
-     SCI0_init                                 C4C5      14      20       0   MyCode      
-     inchar0                                   C4D9       9       9       0   MyCode      
-     outchar0                                  C4E2       8       8       0   MyCode      
-     SCI1_init                                 C4EA      14      20       0   MyCode      
-     inchar1                                   C4FE       9       9       0   MyCode      
-     outchar1                                  C507       8       8       0   MyCode      
-     ddiv                                      C50F      12      18       1   MyCode      
-     dd1                                       C521       F      15       0   MyCode      
-     sharp                                     C530      1D      29       0   MyCode      
-     shp1                                      C54D       8       8       0   MyCode      
-     sharps                                    C555       D      13       2   MyCode      
-     digit                                     C562      10      16       1   MyCode      
-     dgt1                                      C572       A      10       0   MyCode      
-     dgt2                                      C57C       5       5       0   MyCode      
-     number                                    C581      13      19       0   MyCode      
-     num1                                      C594      22      34       0   MyCode      
-     num2                                      C5B6       8       8       0   MyCode      
-     dumul                                     C5BE      19      25       1   MyCode      
-     ad0_enable                                C5D7      11      17       1   MyCode      
-     ad0_enableLine                            C5E8      11      17       0   MyCode      
-     ad0convfast                               C5F9       7       7       0   MyCode      
-     ad0conv                                   C600       6       6       0   MyCode      
-     ad01                                      C606       9       9       0   MyCode      
-     avg40                                     C60F      10      16       0   MyCode      
-     ad1_enable                                C61F      15      21       0   MyCode      
-     ad1conv                                   C634       7       7       0   MyCode      
-     ad11                                      C63B       A      10       0   MyCode      
-     avg41                                     C645      10      16       0   MyCode      
-     motor0_init                               C655      24      36       1   MyCode      
-     motor1_init                               C679      24      36       1   MyCode      
-     motor2_init                               C69D      24      36       0   MyCode      
-     motor3_init                               C6C1      24      36       0   MyCode      
-     motor4_init                               C6E5      24      36       0   MyCode      
-     motor5_init                               C709      24      36       0   MyCode      
-     motor6_init                               C72D      24      36       0   MyCode      
-     motor7_init                               C751      24      36       0   MyCode      
-     motor0                                    C775       3       3       1   MyCode      
-     motor1                                    C778       3       3       1   MyCode      
-     motor2                                    C77B       3       3       0   MyCode      
-     motor3                                    C77E       3       3       0   MyCode      
-     motor4                                    C781       3       3       0   MyCode      
-     motor5                                    C784       3       3       0   MyCode      
-     motor6                                    C787       3       3       0   MyCode      
-     motor7                                    C78A       3       3       0   MyCode      
-     servo54_init                              C78D      21      33       0   MyCode      
-     set_servo54                               C7AE       3       3       0   MyCode      
-     servo76_init                              C7B1      21      33       0   MyCode      
-     set_servo76                               C7D2       3       3       0   MyCode      
-     SPI0_init                                 C7D5      16      22       0   MyCode      
-     SPI1_init                                 C7EB      16      22       0   MyCode      
-     SPI2_init                                 C801      16      22       0   MyCode      
-     snd0                                      C817       0       0       0   MyCode      
-     send_SPI0                                 C817       6       6       0   MyCode      
-     snd01                                     C81D       7       7       0   MyCode      
-     snd1                                      C824       0       0       0   MyCode      
-     send_SPI1                                 C824       6       6       0   MyCode      
-     snd11                                     C82A       7       7       0   MyCode      
-     snd2                                      C831       0       0       0   MyCode      
-     send_SPI2                                 C831       6       6       0   MyCode      
-     snd21                                     C837       7       7       0   MyCode      
-     SS0_HI                                    C83E       5       5       0   MyCode      
-     SS1_HI                                    C843       5       5       0   MyCode      
-     SS2_HI                                    C848       5       5       0   MyCode      
-     SS0_LO                                    C84D       5       5       0   MyCode      
-     SS1_LO                                    C852       5       5       0   MyCode      
-     SS2_LO                                    C857       5       5       0   MyCode      
-     RTI_init                                  C85C       D      13       1   MyCode      
-     clear_RTI_flag                            C869       5       5       1   MyCode      
-     RTI_disable                               C86E       4       4       0   MyCode      
-     SCI0_int_init                             C872      16      22       0   MyCode      
-     read_SCI0_Rx                              C888       5       5       0   MyCode      
-     ptrain6_init                              C88D      2C      44       0   MyCode      
-     ptrain6                                   C8B9      12      18       0   MyCode      
-     sound_init                                C8CB      22      34       0   MyCode      
-     sound_on                                  C8ED       B      11       0   MyCode      
-     sound_off                                 C8F8       9       9       0   MyCode      
-     tone                                      C901      10      16       0   MyCode      
-     HILO1_init                                C911      1F      31       0   MyCode      
-     HILOtimes1                                C930      14      20       0   MyCode      
-     HL1                                       C944       D      13       0   MyCode      
-     HL2                                       C951       4       4       0   MyCode      
-     get_HI_time1                              C955       4       4       0   MyCode      
-     get_LO_time1                              C959       4       4       0   MyCode      
-     fill_weights                              C95D       8       8       0   MyCode      
-     fw1                                       C965       5       5       0   MyCode      
-     fire_rules                                C96A       2       2       0   MyCode      
-     fr0                                       C96C       E      14       0   MyCode      
-     calc_output                               C97A       A      10       0   MyCode      
+     MASK                                      C26C       8       8       4   MyCode      
+     SEG7TBL                                   C274       4       4       1   MyCode      
+     VAR00001                                  C278       4       4       0   MyCode      
+     VAR00002                                  C27C       4       4       0   MyCode      
+     VAR00003                                  C280       4       4       0   MyCode      
+     VAR00004                                  C284       1       1       1   MyCode      
+     VAR00005                                  C285       1       1       0   MyCode      
+     VAR00006                                  C286       1       1       0   MyCode      
+     VAR00007                                  C287       1       1       0   MyCode      
+     VAR00008                                  C288       1       1       0   MyCode      
+     VAR00009                                  C289       1       1       0   MyCode      
+     VAR00010                                  C28A       1       1       0   MyCode      
+     VAR00011                                  C28B       1       1       0   MyCode      
+     VAR00012                                  C28C       1       1       0   MyCode      
+     VAR00013                                  C28D       1       1       0   MyCode      
+     VAR00014                                  C28E       1       1       0   MyCode      
+     VAR00015                                  C28F       1       1       0   MyCode      
+     VAR00016                                  C290       1       1       0   MyCode      
+     VAR00017                                  C291       1       1       0   MyCode      
+     VAR00018                                  C292       1       1       0   MyCode      
+     VAR00019                                  C293       1       1       0   MyCode      
+     asm_main                                  C294      12      18       0   MyCode      
+     PLL_init                                  C294       0       0       1   MyCode      
+     pll1                                      C2A6       A      10       0   MyCode      
+     led_enable                                C2B0      12      18       0   MyCode      
+     leds_on                                   C2C2       3       3       0   MyCode      
+     leds_off                                  C2C5       4       4       0   MyCode      
+     led_disable                               C2C9       A      10       0   MyCode      
+     seg7_enable                               C2D3      12      18       0   MyCode      
+     seg7_disable                              C2E5       A      10       0   MyCode      
+     seg7_on                                   C2EF      10      16       0   MyCode      
+     seg7s_off                                 C2FF       4       4       0   MyCode      
+     ms_delay                                  C303       4       4       9   MyCode      
+     md1                                       C307       3       3       0   MyCode      
+     md2                                       C30A       9       9       0   MyCode      
+     led_on                                    C313       C      12       0   MyCode      
+     led_off                                   C31F       D      13       0   MyCode      
+     seg7dec                                   C32C      17      23       0   MyCode      
+     SW_enable                                 C343       4       4       0   MyCode      
+     SW1_dip                                   C347       4       4       0   MyCode      
+     SW2_down                                  C34B       A      10       0   MyCode      
+     SW2end1                                   C355       1       1       0   MyCode      
+     SW2_up                                    C356       A      10       0   MyCode      
+     SW2end2                                   C360       1       1       0   MyCode      
+     SW3_down                                  C361       B      11       0   MyCode      
+     SW3_up                                    C36C       B      11       0   MyCode      
+     SW4_down                                  C377       A      10       0   MyCode      
+     SW4end1                                   C381       1       1       0   MyCode      
+     SW4_up                                    C382       A      10       0   MyCode      
+     SW4end2                                   C38C       1       1       0   MyCode      
+     SW5_down                                  C38D       A      10       0   MyCode      
+     SW5end1                                   C397       1       1       0   MyCode      
+     SW5_up                                    C398       A      10       0   MyCode      
+     SW5end2                                   C3A2       1       1       0   MyCode      
+     keypad_enable                             C3A3       9       9       0   MyCode      
+     keyscan                                   C3AC       4       4       0   MyCode      
+     ks1                                       C3B0       B      11       0   MyCode      
+     ks2                                       C3BB      11      17       0   MyCode      
+     ks3                                       C3CC       2       2       0   MyCode      
+     keypad                                    C3CE       7       7       0   MyCode      
+     gk1                                       C3D5       0       0       0   MyCode      
+     getkey                                    C3D5      11      17       0   MyCode      
+     wait_keyup                                C3E6      13      19       0   MyCode      
+     lcd_init                                  C3F9       A      10       0   MyCode      
+     lcdi1                                     C403      12      18       0   MyCode      
+     VAR00020                                  C415       1       1       1   MyCode      
+     VAR00021                                  C416       1       1       0   MyCode      
+     VAR00022                                  C417       1       1       0   MyCode      
+     VAR00023                                  C418       1       1       0   MyCode      
+     VAR00024                                  C419       1       1       0   MyCode      
+     VAR00025                                  C41A       1       1       0   MyCode      
+     VAR00026                                  C41B       1       1       0   MyCode      
+     VAR00027                                  C41C       1       1       0   MyCode      
+     VAR00028                                  C41D       1       1       0   MyCode      
+     VAR00029                                  C41E       1       1       0   MyCode      
+     VAR00030                                  C41F       1       1       0   MyCode      
+     VAR00031                                  C420       1       1       0   MyCode      
+     VAR00032                                  C421       1       1       0   MyCode      
+     write_instr_nibble                        C422       B      11       3   MyCode      
+     win                                       C42D       8       8       0   MyCode      
+     write_data_nibble                         C435       B      11       2   MyCode      
+     wdn                                       C440       8       8       0   MyCode      
+     write_instr_byte                          C448       D      13       3   MyCode      
+     write_data_byte                           C455      19      25       2   MyCode      
+     data8                                     C46E       C      12       3   MyCode      
+     set_lcd_addr                              C47A       E      14       0   MyCode      
+     clear_lcd                                 C488       C      12       0   MyCode      
+     hex2lcd                                   C494       6       6       0   MyCode      
+     hex2asc                                   C49A       9       9       0   MyCode      
+     ha1                                       C4A3       3       3       0   MyCode      
+     type_lcd                                  C4A6       3       3       0   MyCode      
+     next_char                                 C4A9       F      15       0   MyCode      
+     done                                      C4B8       2       2       0   MyCode      
+     write_int_lcd                             C4BA      16      22       0   MyCode      
+     wl1                                       C4D0       B      11       0   MyCode      
+     write_long_lcd                            C4DB      15      21       0   MyCode      
+     wll1                                      C4F0       B      11       0   MyCode      
+     blank_pad                                 C4FB       7       7       0   MyCode      
+     bp1                                       C502       6       6       0   MyCode      
+     SCI0_init                                 C508      14      20       0   MyCode      
+     inchar0                                   C51C       9       9       0   MyCode      
+     outchar0                                  C525       8       8       0   MyCode      
+     SCI1_init                                 C52D      14      20       0   MyCode      
+     inchar1                                   C541       9       9       0   MyCode      
+     outchar1                                  C54A       8       8       0   MyCode      
+     ddiv                                      C552      12      18       1   MyCode      
+     dd1                                       C564       F      15       0   MyCode      
+     sharp                                     C573      1D      29       0   MyCode      
+     shp1                                      C590       8       8       0   MyCode      
+     sharps                                    C598       D      13       2   MyCode      
+     digit                                     C5A5      10      16       1   MyCode      
+     dgt1                                      C5B5       A      10       0   MyCode      
+     dgt2                                      C5BF       5       5       0   MyCode      
+     number                                    C5C4      13      19       0   MyCode      
+     num1                                      C5D7      22      34       0   MyCode      
+     num2                                      C5F9       8       8       0   MyCode      
+     dumul                                     C601      19      25       1   MyCode      
+     ad0_enable                                C61A      11      17       1   MyCode      
+     ad0_enableLine                            C62B      11      17       0   MyCode      
+     ad0convfast                               C63C       7       7       0   MyCode      
+     ad0conv                                   C643       6       6       0   MyCode      
+     ad01                                      C649       9       9       0   MyCode      
+     avg40                                     C652      10      16       0   MyCode      
+     ad1_enable                                C662      15      21       0   MyCode      
+     ad1conv                                   C677       7       7       0   MyCode      
+     ad11                                      C67E       A      10       0   MyCode      
+     avg41                                     C688      10      16       0   MyCode      
+     motor0_init                               C698      24      36       1   MyCode      
+     motor1_init                               C6BC      24      36       1   MyCode      
+     motor2_init                               C6E0      24      36       0   MyCode      
+     motor3_init                               C704      24      36       0   MyCode      
+     motor4_init                               C728      24      36       0   MyCode      
+     motor5_init                               C74C      24      36       0   MyCode      
+     motor6_init                               C770      24      36       0   MyCode      
+     motor7_init                               C794      24      36       0   MyCode      
+     motor0                                    C7B8       3       3       2   MyCode      
+     motor1                                    C7BB       3       3       2   MyCode      
+     motor2                                    C7BE       3       3       0   MyCode      
+     motor3                                    C7C1       3       3       0   MyCode      
+     motor4                                    C7C4       3       3       0   MyCode      
+     motor5                                    C7C7       3       3       0   MyCode      
+     motor6                                    C7CA       3       3       0   MyCode      
+     motor7                                    C7CD       3       3       0   MyCode      
+     servo54_init                              C7D0      21      33       0   MyCode      
+     set_servo54                               C7F1       3       3       0   MyCode      
+     servo76_init                              C7F4      21      33       0   MyCode      
+     set_servo76                               C815       3       3       0   MyCode      
+     SPI0_init                                 C818      16      22       0   MyCode      
+     SPI1_init                                 C82E      16      22       0   MyCode      
+     SPI2_init                                 C844      16      22       0   MyCode      
+     snd0                                      C85A       0       0       0   MyCode      
+     send_SPI0                                 C85A       6       6       0   MyCode      
+     snd01                                     C860       7       7       0   MyCode      
+     snd1                                      C867       0       0       0   MyCode      
+     send_SPI1                                 C867       6       6       0   MyCode      
+     snd11                                     C86D       7       7       0   MyCode      
+     snd2                                      C874       0       0       0   MyCode      
+     send_SPI2                                 C874       6       6       0   MyCode      
+     snd21                                     C87A       7       7       0   MyCode      
+     SS0_HI                                    C881       5       5       0   MyCode      
+     SS1_HI                                    C886       5       5       0   MyCode      
+     SS2_HI                                    C88B       5       5       0   MyCode      
+     SS0_LO                                    C890       5       5       0   MyCode      
+     SS1_LO                                    C895       5       5       0   MyCode      
+     SS2_LO                                    C89A       5       5       0   MyCode      
+     RTI_init                                  C89F       D      13       1   MyCode      
+     clear_RTI_flag                            C8AC       5       5       1   MyCode      
+     RTI_disable                               C8B1       4       4       0   MyCode      
+     SCI0_int_init                             C8B5      16      22       0   MyCode      
+     read_SCI0_Rx                              C8CB       5       5       0   MyCode      
+     ptrain6_init                              C8D0      2C      44       0   MyCode      
+     ptrain6                                   C8FC      12      18       0   MyCode      
+     sound_init                                C90E      22      34       0   MyCode      
+     sound_on                                  C930       B      11       0   MyCode      
+     sound_off                                 C93B       9       9       0   MyCode      
+     tone                                      C944      10      16       0   MyCode      
+     HILO1_init                                C954      1F      31       0   MyCode      
+     HILOtimes1                                C973      14      20       0   MyCode      
+     HL1                                       C987       D      13       0   MyCode      
+     HL2                                       C994       4       4       0   MyCode      
+     get_HI_time1                              C998       4       4       0   MyCode      
+     get_LO_time1                              C99C       4       4       0   MyCode      
+     fill_weights                              C9A0       8       8       0   MyCode      
+     fw1                                       C9A8       5       5       0   MyCode      
+     fire_rules                                C9AD       2       2       0   MyCode      
+     fr0                                       C9AF       E      14       0   MyCode      
+     calc_output                               C9BD       A      10       0   MyCode      
 - VARIABLES:
-     temp                                      1114       1       1       2   MY_EXTENDED_RAM
-     pmimg                                     1115       1       1       0   MY_EXTENDED_RAM
-     temp1                                     1116       1       1       0   MY_EXTENDED_RAM
-     bas                                       1117       2       2       3   MY_EXTENDED_RAM
-     dnum                                      1119       4       4      13   MY_EXTENDED_RAM
-     buff                                      111D       C      12       1   MY_EXTENDED_RAM
-     pad                                       1129       1       1       6   MY_EXTENDED_RAM
-     TC1old                                    112A       2       2       4   MY_EXTENDED_RAM
-     LO_time1                                  112C       2       2       2   MY_EXTENDED_RAM
-     HI_time1                                  112E       2       2       2   MY_EXTENDED_RAM
+     temp                                      111A       1       1       2   MY_EXTENDED_RAM
+     pmimg                                     111B       1       1       0   MY_EXTENDED_RAM
+     temp1                                     111C       1       1       0   MY_EXTENDED_RAM
+     bas                                       111D       2       2       3   MY_EXTENDED_RAM
+     dnum                                      111F       4       4      13   MY_EXTENDED_RAM
+     buff                                      1123       C      12       1   MY_EXTENDED_RAM
+     pad                                       112F       1       1       6   MY_EXTENDED_RAM
+     TC1old                                    1130       2       2       4   MY_EXTENDED_RAM
+     LO_time1                                  1132       2       2       2   MY_EXTENDED_RAM
+     HI_time1                                  1134       2       2       2   MY_EXTENDED_RAM
 MODULE:                 -- main.c.o --
 - PROCEDURES:
      portInit                                  C03B      2D      45       1   .text       
      main                                      C068       4       4       1   .text       
      setup                                     C06C      53      83       1   .text       
-     forwardP                                  C0BF      BC     188       1   .text       
-     RTIhandler                                C17B      11      17       1   .text       
-     ANhandler                                 C18C      9D     157       1   .text       
+     forwardP                                  C0BF      FB     251       4   .text       
+     RTIhandler                                C1BA      11      17       1   .text       
+     ANhandler                                 C1CB      A1     161       1   .text       
 - VARIABLES:
      Kp                                        1100       4       4       2   .data       
-     BASE                                      1104       2       2       1   .data       
-     sn                                        1106       2       2       6   .data       
-     isSetup                                   1108       2       2       2   .bss        
-     s4avg                                     110A       2       2       7   .bss        
-     s5avg                                     110C       2       2       7   .bss        
-     s6avg                                     110E       2       2       5   .bss        
-     s7avg                                     1110       2       2       5   .bss        
-     mid                                       1112       2       2       1   .bss        
+     Kd                                        1104       4       4       2   .data       
+     BASE                                      1108       2       2       3   .data       
+     sn                                        110A       2       2       6   .data       
+     lasterror                                 110C       2       2       2   .bss        
+     isSetup                                   110E       2       2       2   .bss        
+     s4avg                                     1110       2       2       7   .bss        
+     s5avg                                     1112       2       2       7   .bss        
+     s6avg                                     1114       2       2       5   .bss        
+     s7avg                                     1116       2       2       5   .bss        
+     mid                                       1118       2       2       1   .bss        
      _Vector_7                                 FFF0       2       2       0   .abs_section_fff0
      _Vector_22                                FFD2       2       2       0   .abs_section_ffd2
-     error                                     1130       2       2       1   .common     
-     routput                                   1132       2       2       3   .common     
-     loutput                                   1134       2       2       5   .common     
-     s4                                        1136       2       2       2   .common     
-     s5                                        1138       2       2       2   .common     
-     s6                                        113A       2       2       2   .common     
-     s7                                        113C       2       2       2   .common     
+     P                                         1136       4       4       4   .common     
+     D                                         113A       4       4       2   .common     
+     output                                    113E       4       4       5   .common     
+     error                                     1142       2       2       3   .common     
+     routput                                   1144       2       2       4   .common     
+     loutput                                   1146       2       2       4   .common     
+     s4                                        1148       2       2       2   .common     
+     s5                                        114A       2       2       2   .common     
+     s6                                        114C       2       2       2   .common     
+     s7                                        114E       2       2       2   .common     
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
      Init                                      C000      29      41       1   .init       
@@ -990,42 +995,42 @@ MODULE:                 -- Start12.c.o --
      __SEG_END_SSTACK                          1100       0       0       1               
 MODULE:                 -- FADD.C.o (ansis.lib) --
 - PROCEDURES:
-     F_ADDKL                                   C984      67     103       1   RUNTIME     
-     _FADD                                     C9EB      15      21       2   RUNTIME     
-     _FSUB                                     CA00      13      19       1   RUNTIME     
+     F_ADDKL                                   C9C7      67     103       1   RUNTIME     
+     _FADD                                     CA2E      15      21       3   RUNTIME     
+     _FSUB                                     CA43      13      19       1   RUNTIME     
 - VARIABLES:
 MODULE:                 -- FCONV.C.o (ansis.lib) --
 - PROCEDURES:
-     F_TOLONGK                                 CA13      33      51       1   RUNTIME     
-     F_FRLONGK                                 CA46      1F      31       1   RUNTIME     
-     _FSFLOAT                                  CA65      12      18       2   RUNTIME     
-     _FSTRUNC                                  CA77      11      17       2   RUNTIME     
+     F_TOLONGK                                 CA56      33      51       1   RUNTIME     
+     F_FRLONGK                                 CA89      1F      31       1   RUNTIME     
+     _FSFLOAT                                  CAA8      12      18       1   RUNTIME     
+     _FSTRUNC                                  CABA      11      17       2   RUNTIME     
 - VARIABLES:
 MODULE:                 -- FMUL.C.o (ansis.lib) --
 - PROCEDURES:
-     F_MULKL                                   CA88      58      88       1   RUNTIME     
-     _FMUL                                     CAE0      14      20       1   RUNTIME     
+     F_MULKL                                   CACB      58      88       1   RUNTIME     
+     _FMUL                                     CB23      14      20       2   RUNTIME     
 - VARIABLES:
 MODULE:                 -- FREGS.C.o (ansis.lib) --
 - PROCEDURES:
-     F_PULK                                    CAF4      15      21       3   RUNTIME     
-     F_PULL                                    CB09      15      21       2   RUNTIME     
-     F_PSHK                                    CB1E      13      19       3   RUNTIME     
-     F_XGKL                                    CB31      21      33       2   RUNTIME     
-     F_CLRK                                    CB52       B      11       2   RUNTIME     
-     F_MAXK                                    CB5D       9       9       1   RUNTIME     
-     F_NORMK                                   CB66      3E      62       2   RUNTIME     
+     F_PULK                                    CB37      15      21       3   RUNTIME     
+     F_PULL                                    CB4C      15      21       2   RUNTIME     
+     F_PSHK                                    CB61      13      19       3   RUNTIME     
+     F_XGKL                                    CB74      21      33       2   RUNTIME     
+     F_CLRK                                    CB95       B      11       2   RUNTIME     
+     F_MAXK                                    CBA0       9       9       1   RUNTIME     
+     F_NORMK                                   CBA9      3E      62       2   RUNTIME     
 - VARIABLES:
 MODULE:                 -- rtshc12.c.o (ansis.lib) --
 - PROCEDURES:
-     _NEG_P                                    CBA4       F      15       1   RUNTIME     
-     _ILSEXT                                   CBB3       7       7       2   RUNTIME     
+     _NEG_P                                    CBE7       F      15       1   RUNTIME     
+     _ILSEXT                                   CBF6       7       7       1   RUNTIME     
 - VARIABLES:
 MODULE:                 -- VREGS.C.o (ansis.lib) --
 - PROCEDURES:
-     L_NEGK                                    CBBA       7       7       2   RUNTIME     
-     L_PSHK                                    CBC1       8       8       1   RUNTIME     
-     SL_PULK                                   CBC9       A      10       1   RUNTIME     
+     L_NEGK                                    CBFD       7       7       2   RUNTIME     
+     L_PSHK                                    CC04       8       8       1   RUNTIME     
+     SL_PULK                                   CC0C       A      10       1   RUNTIME     
 - VARIABLES:
 
 *********************************************************************************************
@@ -1034,7 +1039,7 @@ MODULE STATISTIC
 ---------------------------------------------------------------------------------------------
   mc9s12dg256.c.o                            400      0      0
   main.asm.o                                  28   1883      0
-  main.c.o                                    34    494      4
+  main.c.o                                    52    561      4
   Start12.c.o                                  0     49      0
   FADD.C.o (ansis.lib)                         0    143      0
   FCONV.C.o (ansis.lib)                        0    117      0
@@ -1042,7 +1047,7 @@ MODULE STATISTIC
   FREGS.C.o (ansis.lib)                        0    176      0
   rtshc12.c.o (ansis.lib)                      0     22      0
   VREGS.C.o (ansis.lib)                        0     25      0
-  other                                      256     12     14
+  other                                      256     12     18
 
 *********************************************************************************************
 SECTION USE IN OBJECT-ALLOCATION SECTION
@@ -1050,9 +1055,9 @@ SECTION USE IN OBJECT-ALLOCATION SECTION
 SECTION: ".text"
   portInit main setup forwardP RTIhandler ANhandler 
 SECTION: ".data"
-  Kp BASE sn 
+  Kp Kd BASE sn 
 SECTION: ".bss"
-  isSetup s4avg s5avg s6avg s7avg mid 
+  lasterror isSetup s4avg s5avg s6avg s7avg mid 
 SECTION: ".init"
   Init _Startup 
 SECTION: ".abs_section_8"
@@ -1767,7 +1772,7 @@ SECTION: ".abs_section_fff0"
 SECTION: ".abs_section_ffd2"
   _Vector_22 
 SECTION: ".common"
-  error routput loutput s4 s5 s6 s7 
+  P D output error routput loutput s4 s5 s6 s7 
 SECTION: "RUNTIME"
   F_ADDKL _FADD _FSUB F_TOLONGK F_FRLONGK _FSFLOAT _FSTRUNC F_MULKL _FMUL 
   F_PULK F_PULL F_PSHK F_XGKL F_CLRK F_MAXK F_NORMK _NEG_P _ILSEXT L_NEGK 
@@ -2014,7 +2019,7 @@ OBJECT LIST SORTED BY ADDRESS
      _CAN0TXDLR                                 17C       1       1       0   .abs_section_17c
      _CAN0TXTBPR                                17D       1       1       0   .abs_section_17d
      _CAN0TXTSR                                 17E       2       2       0   .abs_section_17e
-     _PTT                                       240       1       1      13   .abs_section_240
+     _PTT                                       240       1       1      11   .abs_section_240
      _PTIT                                      241       1       1       0   .abs_section_241
      _DDRT                                      242       1       1       1   .abs_section_242
      _RDRT                                      243       1       1       0   .abs_section_243
@@ -2119,247 +2124,252 @@ OBJECT LIST SORTED BY ADDRESS
      _CAN4TXTBPR                                2BD       1       1       0   .abs_section_2bd
      _CAN4TXTSR                                 2BE       2       2       0   .abs_section_2be
      Kp                                        1100       4       4       2   .data       
-     BASE                                      1104       2       2       1   .data       
-     sn                                        1106       2       2       6   .data       
-     isSetup                                   1108       2       2       2   .bss        
-     s4avg                                     110A       2       2       7   .bss        
-     s5avg                                     110C       2       2       7   .bss        
-     s6avg                                     110E       2       2       5   .bss        
-     s7avg                                     1110       2       2       5   .bss        
-     mid                                       1112       2       2       1   .bss        
-     temp                                      1114       1       1       2   MY_EXTENDED_RAM
-     pmimg                                     1115       1       1       0   MY_EXTENDED_RAM
-     temp1                                     1116       1       1       0   MY_EXTENDED_RAM
-     bas                                       1117       2       2       3   MY_EXTENDED_RAM
-     dnum                                      1119       4       4      13   MY_EXTENDED_RAM
-     buff                                      111D       C      12       1   MY_EXTENDED_RAM
-     pad                                       1129       1       1       6   MY_EXTENDED_RAM
-     TC1old                                    112A       2       2       4   MY_EXTENDED_RAM
-     LO_time1                                  112C       2       2       2   MY_EXTENDED_RAM
-     HI_time1                                  112E       2       2       2   MY_EXTENDED_RAM
-     error                                     1130       2       2       1   .common     
-     routput                                   1132       2       2       3   .common     
-     loutput                                   1134       2       2       5   .common     
-     s4                                        1136       2       2       2   .common     
-     s5                                        1138       2       2       2   .common     
-     s6                                        113A       2       2       2   .common     
-     s7                                        113C       2       2       2   .common     
+     Kd                                        1104       4       4       2   .data       
+     BASE                                      1108       2       2       3   .data       
+     sn                                        110A       2       2       6   .data       
+     lasterror                                 110C       2       2       2   .bss        
+     isSetup                                   110E       2       2       2   .bss        
+     s4avg                                     1110       2       2       7   .bss        
+     s5avg                                     1112       2       2       7   .bss        
+     s6avg                                     1114       2       2       5   .bss        
+     s7avg                                     1116       2       2       5   .bss        
+     mid                                       1118       2       2       1   .bss        
+     temp                                      111A       1       1       2   MY_EXTENDED_RAM
+     pmimg                                     111B       1       1       0   MY_EXTENDED_RAM
+     temp1                                     111C       1       1       0   MY_EXTENDED_RAM
+     bas                                       111D       2       2       3   MY_EXTENDED_RAM
+     dnum                                      111F       4       4      13   MY_EXTENDED_RAM
+     buff                                      1123       C      12       1   MY_EXTENDED_RAM
+     pad                                       112F       1       1       6   MY_EXTENDED_RAM
+     TC1old                                    1130       2       2       4   MY_EXTENDED_RAM
+     LO_time1                                  1132       2       2       2   MY_EXTENDED_RAM
+     HI_time1                                  1134       2       2       2   MY_EXTENDED_RAM
+     P                                         1136       4       4       4   .common     
+     D                                         113A       4       4       2   .common     
+     output                                    113E       4       4       5   .common     
+     error                                     1142       2       2       3   .common     
+     routput                                   1144       2       2       4   .common     
+     loutput                                   1146       2       2       4   .common     
+     s4                                        1148       2       2       2   .common     
+     s5                                        114A       2       2       2   .common     
+     s6                                        114C       2       2       2   .common     
+     s7                                        114E       2       2       2   .common     
      Init                                      C000      29      41       1   .init       
      _Startup                                  C029       8       8       0   .init       
      portInit                                  C03B      2D      45       1   .text       
      main                                      C068       4       4       1   .text       
      setup                                     C06C      53      83       1   .text       
-     forwardP                                  C0BF      BC     188       1   .text       
-     RTIhandler                                C17B      11      17       1   .text       
-     ANhandler                                 C18C      9D     157       1   .text       
-     MASK                                      C229       8       8       4   MyCode      
-     SEG7TBL                                   C231       4       4       1   MyCode      
-     VAR00001                                  C235       4       4       0   MyCode      
-     VAR00002                                  C239       4       4       0   MyCode      
-     VAR00003                                  C23D       4       4       0   MyCode      
-     VAR00004                                  C241       1       1       1   MyCode      
-     VAR00005                                  C242       1       1       0   MyCode      
-     VAR00006                                  C243       1       1       0   MyCode      
-     VAR00007                                  C244       1       1       0   MyCode      
-     VAR00008                                  C245       1       1       0   MyCode      
-     VAR00009                                  C246       1       1       0   MyCode      
-     VAR00010                                  C247       1       1       0   MyCode      
-     VAR00011                                  C248       1       1       0   MyCode      
-     VAR00012                                  C249       1       1       0   MyCode      
-     VAR00013                                  C24A       1       1       0   MyCode      
-     VAR00014                                  C24B       1       1       0   MyCode      
-     VAR00015                                  C24C       1       1       0   MyCode      
-     VAR00016                                  C24D       1       1       0   MyCode      
-     VAR00017                                  C24E       1       1       0   MyCode      
-     VAR00018                                  C24F       1       1       0   MyCode      
-     VAR00019                                  C250       1       1       0   MyCode      
-     PLL_init                                  C251       0       0       1   MyCode      
-     asm_main                                  C251      12      18       0   MyCode      
-     pll1                                      C263       A      10       0   MyCode      
-     led_enable                                C26D      12      18       0   MyCode      
-     leds_on                                   C27F       3       3       0   MyCode      
-     leds_off                                  C282       4       4       0   MyCode      
-     led_disable                               C286       A      10       0   MyCode      
-     seg7_enable                               C290      12      18       0   MyCode      
-     seg7_disable                              C2A2       A      10       0   MyCode      
-     seg7_on                                   C2AC      10      16       0   MyCode      
-     seg7s_off                                 C2BC       4       4       0   MyCode      
-     ms_delay                                  C2C0       4       4       9   MyCode      
-     md1                                       C2C4       3       3       0   MyCode      
-     md2                                       C2C7       9       9       0   MyCode      
-     led_on                                    C2D0       C      12       0   MyCode      
-     led_off                                   C2DC       D      13       0   MyCode      
-     seg7dec                                   C2E9      17      23       0   MyCode      
-     SW_enable                                 C300       4       4       0   MyCode      
-     SW1_dip                                   C304       4       4       0   MyCode      
-     SW2_down                                  C308       A      10       0   MyCode      
-     SW2end1                                   C312       1       1       0   MyCode      
-     SW2_up                                    C313       A      10       0   MyCode      
-     SW2end2                                   C31D       1       1       0   MyCode      
-     SW3_down                                  C31E       B      11       0   MyCode      
-     SW3_up                                    C329       B      11       0   MyCode      
-     SW4_down                                  C334       A      10       0   MyCode      
-     SW4end1                                   C33E       1       1       0   MyCode      
-     SW4_up                                    C33F       A      10       0   MyCode      
-     SW4end2                                   C349       1       1       0   MyCode      
-     SW5_down                                  C34A       A      10       0   MyCode      
-     SW5end1                                   C354       1       1       0   MyCode      
-     SW5_up                                    C355       A      10       0   MyCode      
-     SW5end2                                   C35F       1       1       0   MyCode      
-     keypad_enable                             C360       9       9       0   MyCode      
-     keyscan                                   C369       4       4       0   MyCode      
-     ks1                                       C36D       B      11       0   MyCode      
-     ks2                                       C378      11      17       0   MyCode      
-     ks3                                       C389       2       2       0   MyCode      
-     keypad                                    C38B       7       7       0   MyCode      
-     getkey                                    C392      11      17       0   MyCode      
-     gk1                                       C392       0       0       0   MyCode      
-     wait_keyup                                C3A3      13      19       0   MyCode      
-     lcd_init                                  C3B6       A      10       0   MyCode      
-     lcdi1                                     C3C0      12      18       0   MyCode      
-     VAR00020                                  C3D2       1       1       1   MyCode      
-     VAR00021                                  C3D3       1       1       0   MyCode      
-     VAR00022                                  C3D4       1       1       0   MyCode      
-     VAR00023                                  C3D5       1       1       0   MyCode      
-     VAR00024                                  C3D6       1       1       0   MyCode      
-     VAR00025                                  C3D7       1       1       0   MyCode      
-     VAR00026                                  C3D8       1       1       0   MyCode      
-     VAR00027                                  C3D9       1       1       0   MyCode      
-     VAR00028                                  C3DA       1       1       0   MyCode      
-     VAR00029                                  C3DB       1       1       0   MyCode      
-     VAR00030                                  C3DC       1       1       0   MyCode      
-     VAR00031                                  C3DD       1       1       0   MyCode      
-     VAR00032                                  C3DE       1       1       0   MyCode      
-     write_instr_nibble                        C3DF       B      11       3   MyCode      
-     win                                       C3EA       8       8       0   MyCode      
-     write_data_nibble                         C3F2       B      11       2   MyCode      
-     wdn                                       C3FD       8       8       0   MyCode      
-     write_instr_byte                          C405       D      13       3   MyCode      
-     write_data_byte                           C412      19      25       2   MyCode      
-     data8                                     C42B       C      12       3   MyCode      
-     set_lcd_addr                              C437       E      14       0   MyCode      
-     clear_lcd                                 C445       C      12       0   MyCode      
-     hex2lcd                                   C451       6       6       0   MyCode      
-     hex2asc                                   C457       9       9       0   MyCode      
-     ha1                                       C460       3       3       0   MyCode      
-     type_lcd                                  C463       3       3       0   MyCode      
-     next_char                                 C466       F      15       0   MyCode      
-     done                                      C475       2       2       0   MyCode      
-     write_int_lcd                             C477      16      22       0   MyCode      
-     wl1                                       C48D       B      11       0   MyCode      
-     write_long_lcd                            C498      15      21       0   MyCode      
-     wll1                                      C4AD       B      11       0   MyCode      
-     blank_pad                                 C4B8       7       7       0   MyCode      
-     bp1                                       C4BF       6       6       0   MyCode      
-     SCI0_init                                 C4C5      14      20       0   MyCode      
-     inchar0                                   C4D9       9       9       0   MyCode      
-     outchar0                                  C4E2       8       8       0   MyCode      
-     SCI1_init                                 C4EA      14      20       0   MyCode      
-     inchar1                                   C4FE       9       9       0   MyCode      
-     outchar1                                  C507       8       8       0   MyCode      
-     ddiv                                      C50F      12      18       1   MyCode      
-     dd1                                       C521       F      15       0   MyCode      
-     sharp                                     C530      1D      29       0   MyCode      
-     shp1                                      C54D       8       8       0   MyCode      
-     sharps                                    C555       D      13       2   MyCode      
-     digit                                     C562      10      16       1   MyCode      
-     dgt1                                      C572       A      10       0   MyCode      
-     dgt2                                      C57C       5       5       0   MyCode      
-     number                                    C581      13      19       0   MyCode      
-     num1                                      C594      22      34       0   MyCode      
-     num2                                      C5B6       8       8       0   MyCode      
-     dumul                                     C5BE      19      25       1   MyCode      
-     ad0_enable                                C5D7      11      17       1   MyCode      
-     ad0_enableLine                            C5E8      11      17       0   MyCode      
-     ad0convfast                               C5F9       7       7       0   MyCode      
-     ad0conv                                   C600       6       6       0   MyCode      
-     ad01                                      C606       9       9       0   MyCode      
-     avg40                                     C60F      10      16       0   MyCode      
-     ad1_enable                                C61F      15      21       0   MyCode      
-     ad1conv                                   C634       7       7       0   MyCode      
-     ad11                                      C63B       A      10       0   MyCode      
-     avg41                                     C645      10      16       0   MyCode      
-     motor0_init                               C655      24      36       1   MyCode      
-     motor1_init                               C679      24      36       1   MyCode      
-     motor2_init                               C69D      24      36       0   MyCode      
-     motor3_init                               C6C1      24      36       0   MyCode      
-     motor4_init                               C6E5      24      36       0   MyCode      
-     motor5_init                               C709      24      36       0   MyCode      
-     motor6_init                               C72D      24      36       0   MyCode      
-     motor7_init                               C751      24      36       0   MyCode      
-     motor0                                    C775       3       3       1   MyCode      
-     motor1                                    C778       3       3       1   MyCode      
-     motor2                                    C77B       3       3       0   MyCode      
-     motor3                                    C77E       3       3       0   MyCode      
-     motor4                                    C781       3       3       0   MyCode      
-     motor5                                    C784       3       3       0   MyCode      
-     motor6                                    C787       3       3       0   MyCode      
-     motor7                                    C78A       3       3       0   MyCode      
-     servo54_init                              C78D      21      33       0   MyCode      
-     set_servo54                               C7AE       3       3       0   MyCode      
-     servo76_init                              C7B1      21      33       0   MyCode      
-     set_servo76                               C7D2       3       3       0   MyCode      
-     SPI0_init                                 C7D5      16      22       0   MyCode      
-     SPI1_init                                 C7EB      16      22       0   MyCode      
-     SPI2_init                                 C801      16      22       0   MyCode      
-     send_SPI0                                 C817       6       6       0   MyCode      
-     snd0                                      C817       0       0       0   MyCode      
-     snd01                                     C81D       7       7       0   MyCode      
-     send_SPI1                                 C824       6       6       0   MyCode      
-     snd1                                      C824       0       0       0   MyCode      
-     snd11                                     C82A       7       7       0   MyCode      
-     send_SPI2                                 C831       6       6       0   MyCode      
-     snd2                                      C831       0       0       0   MyCode      
-     snd21                                     C837       7       7       0   MyCode      
-     SS0_HI                                    C83E       5       5       0   MyCode      
-     SS1_HI                                    C843       5       5       0   MyCode      
-     SS2_HI                                    C848       5       5       0   MyCode      
-     SS0_LO                                    C84D       5       5       0   MyCode      
-     SS1_LO                                    C852       5       5       0   MyCode      
-     SS2_LO                                    C857       5       5       0   MyCode      
-     RTI_init                                  C85C       D      13       1   MyCode      
-     clear_RTI_flag                            C869       5       5       1   MyCode      
-     RTI_disable                               C86E       4       4       0   MyCode      
-     SCI0_int_init                             C872      16      22       0   MyCode      
-     read_SCI0_Rx                              C888       5       5       0   MyCode      
-     ptrain6_init                              C88D      2C      44       0   MyCode      
-     ptrain6                                   C8B9      12      18       0   MyCode      
-     sound_init                                C8CB      22      34       0   MyCode      
-     sound_on                                  C8ED       B      11       0   MyCode      
-     sound_off                                 C8F8       9       9       0   MyCode      
-     tone                                      C901      10      16       0   MyCode      
-     HILO1_init                                C911      1F      31       0   MyCode      
-     HILOtimes1                                C930      14      20       0   MyCode      
-     HL1                                       C944       D      13       0   MyCode      
-     HL2                                       C951       4       4       0   MyCode      
-     get_HI_time1                              C955       4       4       0   MyCode      
-     get_LO_time1                              C959       4       4       0   MyCode      
-     fill_weights                              C95D       8       8       0   MyCode      
-     fw1                                       C965       5       5       0   MyCode      
-     fire_rules                                C96A       2       2       0   MyCode      
-     fr0                                       C96C       E      14       0   MyCode      
-     calc_output                               C97A       A      10       0   MyCode      
-     F_ADDKL                                   C984      67     103       1   RUNTIME     
-     _FADD                                     C9EB      15      21       2   RUNTIME     
-     _FSUB                                     CA00      13      19       1   RUNTIME     
-     F_TOLONGK                                 CA13      33      51       1   RUNTIME     
-     F_FRLONGK                                 CA46      1F      31       1   RUNTIME     
-     _FSFLOAT                                  CA65      12      18       2   RUNTIME     
-     _FSTRUNC                                  CA77      11      17       2   RUNTIME     
-     F_MULKL                                   CA88      58      88       1   RUNTIME     
-     _FMUL                                     CAE0      14      20       1   RUNTIME     
-     F_PULK                                    CAF4      15      21       3   RUNTIME     
-     F_PULL                                    CB09      15      21       2   RUNTIME     
-     F_PSHK                                    CB1E      13      19       3   RUNTIME     
-     F_XGKL                                    CB31      21      33       2   RUNTIME     
-     F_CLRK                                    CB52       B      11       2   RUNTIME     
-     F_MAXK                                    CB5D       9       9       1   RUNTIME     
-     F_NORMK                                   CB66      3E      62       2   RUNTIME     
-     _NEG_P                                    CBA4       F      15       1   RUNTIME     
-     _ILSEXT                                   CBB3       7       7       2   RUNTIME     
-     L_NEGK                                    CBBA       7       7       2   RUNTIME     
-     L_PSHK                                    CBC1       8       8       1   RUNTIME     
-     SL_PULK                                   CBC9       A      10       1   RUNTIME     
+     forwardP                                  C0BF      FB     251       4   .text       
+     RTIhandler                                C1BA      11      17       1   .text       
+     ANhandler                                 C1CB      A1     161       1   .text       
+     MASK                                      C26C       8       8       4   MyCode      
+     SEG7TBL                                   C274       4       4       1   MyCode      
+     VAR00001                                  C278       4       4       0   MyCode      
+     VAR00002                                  C27C       4       4       0   MyCode      
+     VAR00003                                  C280       4       4       0   MyCode      
+     VAR00004                                  C284       1       1       1   MyCode      
+     VAR00005                                  C285       1       1       0   MyCode      
+     VAR00006                                  C286       1       1       0   MyCode      
+     VAR00007                                  C287       1       1       0   MyCode      
+     VAR00008                                  C288       1       1       0   MyCode      
+     VAR00009                                  C289       1       1       0   MyCode      
+     VAR00010                                  C28A       1       1       0   MyCode      
+     VAR00011                                  C28B       1       1       0   MyCode      
+     VAR00012                                  C28C       1       1       0   MyCode      
+     VAR00013                                  C28D       1       1       0   MyCode      
+     VAR00014                                  C28E       1       1       0   MyCode      
+     VAR00015                                  C28F       1       1       0   MyCode      
+     VAR00016                                  C290       1       1       0   MyCode      
+     VAR00017                                  C291       1       1       0   MyCode      
+     VAR00018                                  C292       1       1       0   MyCode      
+     VAR00019                                  C293       1       1       0   MyCode      
+     PLL_init                                  C294       0       0       1   MyCode      
+     asm_main                                  C294      12      18       0   MyCode      
+     pll1                                      C2A6       A      10       0   MyCode      
+     led_enable                                C2B0      12      18       0   MyCode      
+     leds_on                                   C2C2       3       3       0   MyCode      
+     leds_off                                  C2C5       4       4       0   MyCode      
+     led_disable                               C2C9       A      10       0   MyCode      
+     seg7_enable                               C2D3      12      18       0   MyCode      
+     seg7_disable                              C2E5       A      10       0   MyCode      
+     seg7_on                                   C2EF      10      16       0   MyCode      
+     seg7s_off                                 C2FF       4       4       0   MyCode      
+     ms_delay                                  C303       4       4       9   MyCode      
+     md1                                       C307       3       3       0   MyCode      
+     md2                                       C30A       9       9       0   MyCode      
+     led_on                                    C313       C      12       0   MyCode      
+     led_off                                   C31F       D      13       0   MyCode      
+     seg7dec                                   C32C      17      23       0   MyCode      
+     SW_enable                                 C343       4       4       0   MyCode      
+     SW1_dip                                   C347       4       4       0   MyCode      
+     SW2_down                                  C34B       A      10       0   MyCode      
+     SW2end1                                   C355       1       1       0   MyCode      
+     SW2_up                                    C356       A      10       0   MyCode      
+     SW2end2                                   C360       1       1       0   MyCode      
+     SW3_down                                  C361       B      11       0   MyCode      
+     SW3_up                                    C36C       B      11       0   MyCode      
+     SW4_down                                  C377       A      10       0   MyCode      
+     SW4end1                                   C381       1       1       0   MyCode      
+     SW4_up                                    C382       A      10       0   MyCode      
+     SW4end2                                   C38C       1       1       0   MyCode      
+     SW5_down                                  C38D       A      10       0   MyCode      
+     SW5end1                                   C397       1       1       0   MyCode      
+     SW5_up                                    C398       A      10       0   MyCode      
+     SW5end2                                   C3A2       1       1       0   MyCode      
+     keypad_enable                             C3A3       9       9       0   MyCode      
+     keyscan                                   C3AC       4       4       0   MyCode      
+     ks1                                       C3B0       B      11       0   MyCode      
+     ks2                                       C3BB      11      17       0   MyCode      
+     ks3                                       C3CC       2       2       0   MyCode      
+     keypad                                    C3CE       7       7       0   MyCode      
+     getkey                                    C3D5      11      17       0   MyCode      
+     gk1                                       C3D5       0       0       0   MyCode      
+     wait_keyup                                C3E6      13      19       0   MyCode      
+     lcd_init                                  C3F9       A      10       0   MyCode      
+     lcdi1                                     C403      12      18       0   MyCode      
+     VAR00020                                  C415       1       1       1   MyCode      
+     VAR00021                                  C416       1       1       0   MyCode      
+     VAR00022                                  C417       1       1       0   MyCode      
+     VAR00023                                  C418       1       1       0   MyCode      
+     VAR00024                                  C419       1       1       0   MyCode      
+     VAR00025                                  C41A       1       1       0   MyCode      
+     VAR00026                                  C41B       1       1       0   MyCode      
+     VAR00027                                  C41C       1       1       0   MyCode      
+     VAR00028                                  C41D       1       1       0   MyCode      
+     VAR00029                                  C41E       1       1       0   MyCode      
+     VAR00030                                  C41F       1       1       0   MyCode      
+     VAR00031                                  C420       1       1       0   MyCode      
+     VAR00032                                  C421       1       1       0   MyCode      
+     write_instr_nibble                        C422       B      11       3   MyCode      
+     win                                       C42D       8       8       0   MyCode      
+     write_data_nibble                         C435       B      11       2   MyCode      
+     wdn                                       C440       8       8       0   MyCode      
+     write_instr_byte                          C448       D      13       3   MyCode      
+     write_data_byte                           C455      19      25       2   MyCode      
+     data8                                     C46E       C      12       3   MyCode      
+     set_lcd_addr                              C47A       E      14       0   MyCode      
+     clear_lcd                                 C488       C      12       0   MyCode      
+     hex2lcd                                   C494       6       6       0   MyCode      
+     hex2asc                                   C49A       9       9       0   MyCode      
+     ha1                                       C4A3       3       3       0   MyCode      
+     type_lcd                                  C4A6       3       3       0   MyCode      
+     next_char                                 C4A9       F      15       0   MyCode      
+     done                                      C4B8       2       2       0   MyCode      
+     write_int_lcd                             C4BA      16      22       0   MyCode      
+     wl1                                       C4D0       B      11       0   MyCode      
+     write_long_lcd                            C4DB      15      21       0   MyCode      
+     wll1                                      C4F0       B      11       0   MyCode      
+     blank_pad                                 C4FB       7       7       0   MyCode      
+     bp1                                       C502       6       6       0   MyCode      
+     SCI0_init                                 C508      14      20       0   MyCode      
+     inchar0                                   C51C       9       9       0   MyCode      
+     outchar0                                  C525       8       8       0   MyCode      
+     SCI1_init                                 C52D      14      20       0   MyCode      
+     inchar1                                   C541       9       9       0   MyCode      
+     outchar1                                  C54A       8       8       0   MyCode      
+     ddiv                                      C552      12      18       1   MyCode      
+     dd1                                       C564       F      15       0   MyCode      
+     sharp                                     C573      1D      29       0   MyCode      
+     shp1                                      C590       8       8       0   MyCode      
+     sharps                                    C598       D      13       2   MyCode      
+     digit                                     C5A5      10      16       1   MyCode      
+     dgt1                                      C5B5       A      10       0   MyCode      
+     dgt2                                      C5BF       5       5       0   MyCode      
+     number                                    C5C4      13      19       0   MyCode      
+     num1                                      C5D7      22      34       0   MyCode      
+     num2                                      C5F9       8       8       0   MyCode      
+     dumul                                     C601      19      25       1   MyCode      
+     ad0_enable                                C61A      11      17       1   MyCode      
+     ad0_enableLine                            C62B      11      17       0   MyCode      
+     ad0convfast                               C63C       7       7       0   MyCode      
+     ad0conv                                   C643       6       6       0   MyCode      
+     ad01                                      C649       9       9       0   MyCode      
+     avg40                                     C652      10      16       0   MyCode      
+     ad1_enable                                C662      15      21       0   MyCode      
+     ad1conv                                   C677       7       7       0   MyCode      
+     ad11                                      C67E       A      10       0   MyCode      
+     avg41                                     C688      10      16       0   MyCode      
+     motor0_init                               C698      24      36       1   MyCode      
+     motor1_init                               C6BC      24      36       1   MyCode      
+     motor2_init                               C6E0      24      36       0   MyCode      
+     motor3_init                               C704      24      36       0   MyCode      
+     motor4_init                               C728      24      36       0   MyCode      
+     motor5_init                               C74C      24      36       0   MyCode      
+     motor6_init                               C770      24      36       0   MyCode      
+     motor7_init                               C794      24      36       0   MyCode      
+     motor0                                    C7B8       3       3       2   MyCode      
+     motor1                                    C7BB       3       3       2   MyCode      
+     motor2                                    C7BE       3       3       0   MyCode      
+     motor3                                    C7C1       3       3       0   MyCode      
+     motor4                                    C7C4       3       3       0   MyCode      
+     motor5                                    C7C7       3       3       0   MyCode      
+     motor6                                    C7CA       3       3       0   MyCode      
+     motor7                                    C7CD       3       3       0   MyCode      
+     servo54_init                              C7D0      21      33       0   MyCode      
+     set_servo54                               C7F1       3       3       0   MyCode      
+     servo76_init                              C7F4      21      33       0   MyCode      
+     set_servo76                               C815       3       3       0   MyCode      
+     SPI0_init                                 C818      16      22       0   MyCode      
+     SPI1_init                                 C82E      16      22       0   MyCode      
+     SPI2_init                                 C844      16      22       0   MyCode      
+     send_SPI0                                 C85A       6       6       0   MyCode      
+     snd0                                      C85A       0       0       0   MyCode      
+     snd01                                     C860       7       7       0   MyCode      
+     send_SPI1                                 C867       6       6       0   MyCode      
+     snd1                                      C867       0       0       0   MyCode      
+     snd11                                     C86D       7       7       0   MyCode      
+     send_SPI2                                 C874       6       6       0   MyCode      
+     snd2                                      C874       0       0       0   MyCode      
+     snd21                                     C87A       7       7       0   MyCode      
+     SS0_HI                                    C881       5       5       0   MyCode      
+     SS1_HI                                    C886       5       5       0   MyCode      
+     SS2_HI                                    C88B       5       5       0   MyCode      
+     SS0_LO                                    C890       5       5       0   MyCode      
+     SS1_LO                                    C895       5       5       0   MyCode      
+     SS2_LO                                    C89A       5       5       0   MyCode      
+     RTI_init                                  C89F       D      13       1   MyCode      
+     clear_RTI_flag                            C8AC       5       5       1   MyCode      
+     RTI_disable                               C8B1       4       4       0   MyCode      
+     SCI0_int_init                             C8B5      16      22       0   MyCode      
+     read_SCI0_Rx                              C8CB       5       5       0   MyCode      
+     ptrain6_init                              C8D0      2C      44       0   MyCode      
+     ptrain6                                   C8FC      12      18       0   MyCode      
+     sound_init                                C90E      22      34       0   MyCode      
+     sound_on                                  C930       B      11       0   MyCode      
+     sound_off                                 C93B       9       9       0   MyCode      
+     tone                                      C944      10      16       0   MyCode      
+     HILO1_init                                C954      1F      31       0   MyCode      
+     HILOtimes1                                C973      14      20       0   MyCode      
+     HL1                                       C987       D      13       0   MyCode      
+     HL2                                       C994       4       4       0   MyCode      
+     get_HI_time1                              C998       4       4       0   MyCode      
+     get_LO_time1                              C99C       4       4       0   MyCode      
+     fill_weights                              C9A0       8       8       0   MyCode      
+     fw1                                       C9A8       5       5       0   MyCode      
+     fire_rules                                C9AD       2       2       0   MyCode      
+     fr0                                       C9AF       E      14       0   MyCode      
+     calc_output                               C9BD       A      10       0   MyCode      
+     F_ADDKL                                   C9C7      67     103       1   RUNTIME     
+     _FADD                                     CA2E      15      21       3   RUNTIME     
+     _FSUB                                     CA43      13      19       1   RUNTIME     
+     F_TOLONGK                                 CA56      33      51       1   RUNTIME     
+     F_FRLONGK                                 CA89      1F      31       1   RUNTIME     
+     _FSFLOAT                                  CAA8      12      18       1   RUNTIME     
+     _FSTRUNC                                  CABA      11      17       2   RUNTIME     
+     F_MULKL                                   CACB      58      88       1   RUNTIME     
+     _FMUL                                     CB23      14      20       2   RUNTIME     
+     F_PULK                                    CB37      15      21       3   RUNTIME     
+     F_PULL                                    CB4C      15      21       2   RUNTIME     
+     F_PSHK                                    CB61      13      19       3   RUNTIME     
+     F_XGKL                                    CB74      21      33       2   RUNTIME     
+     F_CLRK                                    CB95       B      11       2   RUNTIME     
+     F_MAXK                                    CBA0       9       9       1   RUNTIME     
+     F_NORMK                                   CBA9      3E      62       2   RUNTIME     
+     _NEG_P                                    CBE7       F      15       1   RUNTIME     
+     _ILSEXT                                   CBF6       7       7       1   RUNTIME     
+     L_NEGK                                    CBFD       7       7       2   RUNTIME     
+     L_PSHK                                    CC04       8       8       1   RUNTIME     
+     SL_PULK                                   CC0C       A      10       1   RUNTIME     
      _Vector_22                                FFD2       2       2       0   .abs_section_ffd2
      _Vector_7                                 FFF0       2       2       0   .abs_section_fff0
 
@@ -2388,33 +2398,39 @@ VREGS.C.o (ansis.lib):
   UL_PULK 
 NOT USED VARIABLES
 main.c.o:
-  MAX MIN sensorCount sensorStart BASETURN lastError lastFront moveRight 
-  moveLeft sum senSum deltaError err_right err_left s0 s1 s2 s3 
+  MAX MIN sensorCount sensorStart lastFront moveRight moveLeft sum senSum 
+  deltaError err_right err_left s0 s1 s2 s3 
 rtshc12.c.o (ansis.lib):
   _PowOfTwo_8 _PowOfTwo_16 _PowOfTwo_32 errno 
 
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xCBD3 ---- SIZE       4 ---
+------- ROM-ADDRESS: 0xCC16 ---- SIZE       4 ---
 Filling bytes inserted
- 00081100
-------- ROM-ADDRESS: 0xCBD7 ---- RAM-ADDRESS: 0x1100 ---- SIZE       2 ---
+ 000C1100
+------- ROM-ADDRESS: 0xCC1A ---- RAM-ADDRESS: 0x1100 ---- SIZE       2 ---
 Name of initialized Object : Kp
- 3F80
-------- ROM-ADDRESS: 0xCBD9 ---- SIZE       3 ---
+ 4020
+------- ROM-ADDRESS: 0xCC1C ---- SIZE       2 ---
+Filling bytes inserted
+ 0000
+------- ROM-ADDRESS: 0xCC1E ---- RAM-ADDRESS: 0x1104 ---- SIZE       2 ---
+Name of initialized Object : Kd
+ 4170
+------- ROM-ADDRESS: 0xCC20 ---- SIZE       3 ---
 Filling bytes inserted
  000000
-------- ROM-ADDRESS: 0xCBDC ---- RAM-ADDRESS: 0x1105 ---- SIZE       1 ---
+------- ROM-ADDRESS: 0xCC23 ---- RAM-ADDRESS: 0x1109 ---- SIZE       1 ---
 Name of initialized Object : BASE:1
- 2D
-------- ROM-ADDRESS: 0xCBDD ---- SIZE       1 ---
+ 4B
+------- ROM-ADDRESS: 0xCC24 ---- SIZE       1 ---
 Filling bytes inserted
  00
-------- ROM-ADDRESS: 0xCBDE ---- RAM-ADDRESS: 0x1107 ---- SIZE       1 ---
+------- ROM-ADDRESS: 0xCC25 ---- RAM-ADDRESS: 0x110B ---- SIZE       1 ---
 Name of initialized Object : sn:1
- 01
-------- ROM-ADDRESS: 0xCBDF ---- SIZE       2 ---
+ 0A
+------- ROM-ADDRESS: 0xCC26 ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -2427,9 +2443,9 @@ portInit                  USES PLL_init _DDRH _DDRAB _PORTAB _DDRT _PTT
                                 motor0_init motor1_init ad0_enable RTI_init 
 main                      USES portInit 
 setup                     USES _PORTAB ms_delay isSetup _PTT s4avg s5avg mid 
-forwardP                  USES s4avg s5avg error _ILSEXT _FSFLOAT Kp _FMUL 
-                                BASE _FSUB _FSTRUNC routput _FADD loutput _PTT 
-                                motor0 motor1 
+forwardP                  USES s4avg s5avg error forwardP Kp _FMUL P lasterror 
+                                Kd D _FADD output BASE _FSTRUNC routput _FSUB 
+                                loutput motor1 _PTT motor0 _ILSEXT _FSFLOAT 
 RTIhandler                USES isSetup setup forwardP clear_RTI_flag 
 ANhandler                 USES _ATD0DR0 s4 _ATD0DR1 s5 _ATD0DR2 s6 _ATD0DR3 s7 
                                 s4avg sn s5avg s6avg s7avg 
@@ -2516,20 +2532,6 @@ DEPENDENCY TREE
     |       
     +- forwardP            
     |  | 
-    |  +- _ILSEXT             
-    |  |    
-    |  +- _FSFLOAT            
-    |  |  | 
-    |  |  +- SL_PULK             
-    |  |  |  | 
-    |  |  |  +- L_NEGK              
-    |  |  |     | 
-    |  |  |     +- _NEG_P              
-    |  |  |          
-    |  |  +- F_FRLONGK           
-    |  |  |    
-    |  |  +- F_PSHK              
-    |  |       
     |  +- _FMUL               
     |  |  | 
     |  |  +- F_PULK              
@@ -2546,24 +2548,22 @@ DEPENDENCY TREE
     |  |  |        | 
     |  |  |        +- F_CLRK               (see above)
     |  |  |           
+    |  |  +- F_PSHK              
+    |  |       
+    |  +- _FADD               
+    |  |  | 
+    |  |  +- F_PULK               (see above)
+    |  |  |  
+    |  |  +- F_PULL               (see above)
+    |  |  |  
+    |  |  +- F_ADDKL             
+    |  |  |  | 
+    |  |  |  +- F_XGKL              
+    |  |  |  |    
+    |  |  |  +- F_NORMK              (see above)
+    |  |  |     
     |  |  +- F_PSHK               (see above)
     |  |     
-    |  +- _FSUB               
-    |  |  | 
-    |  |  +- _FADD               
-    |  |     | 
-    |  |     +- F_PULK               (see above)
-    |  |     |  
-    |  |     +- F_PULL               (see above)
-    |  |     |  
-    |  |     +- F_ADDKL             
-    |  |     |  | 
-    |  |     |  +- F_XGKL              
-    |  |     |  |    
-    |  |     |  +- F_NORMK              (see above)
-    |  |     |     
-    |  |     +- F_PSHK               (see above)
-    |  |        
     |  +- _FSTRUNC            
     |  |  | 
     |  |  +- F_PULK               (see above)
@@ -2572,14 +2572,30 @@ DEPENDENCY TREE
     |  |  |    
     |  |  +- L_PSHK              
     |  |     | 
-    |  |     +- L_NEGK               (see above)
-    |  |        
-    |  +- _FADD                (see above)
-    |  |  
+    |  |     +- L_NEGK              
+    |  |        | 
+    |  |        +- _NEG_P              
+    |  |             
+    |  +- _FSUB               
+    |  |  | 
+    |  |  +- _FADD                (see above)
+    |  |     
+    |  +- motor1              
+    |  |    
     |  +- motor0              
     |  |    
-    |  +- motor1              
-    |       
+    |  +- _ILSEXT             
+    |  |    
+    |  +- _FSFLOAT            
+    |     | 
+    |     +- SL_PULK             
+    |     |  | 
+    |     |  +- L_NEGK               (see above)
+    |     |     
+    |     +- F_FRLONGK           
+    |     |    
+    |     +- F_PSHK               (see above)
+    |        
     +- clear_RTI_flag      
          
  _Vector_22          
@@ -2593,5 +2609,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 9
-Total size of all blocks to be downloaded: 3047
+Total size of all blocks to be downloaded: 3118
 
